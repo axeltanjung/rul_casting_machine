@@ -48,33 +48,33 @@ def main() -> None:
     st.sidebar.header("Filters")
 
     steel_types = sorted(df["steel_type"].dropna().unique()) if "steel_type" in df.columns else []
-    selected_steel_types = (
-        st.sidebar.multiselect("Steel type", steel_types, default=steel_types)
+    selected_steel_type = (
+        st.sidebar.selectbox("Steel type", ["All"] + steel_types, index=0)
         if steel_types
-        else []
+        else "All"
     )
 
     alloy_types = sorted(df["alloy_type"].dropna().unique()) if "alloy_type" in df.columns else []
-    selected_alloy_types = (
-        st.sidebar.multiselect("Alloy type", alloy_types, default=alloy_types)
+    selected_alloy_type = (
+        st.sidebar.selectbox("Alloy type", ["All"] + alloy_types, index=0)
         if alloy_types
-        else []
+        else "All"
     )
 
     num_streams = sorted(df["num_stream"].dropna().unique()) if "num_stream" in df.columns else []
-    selected_num_streams = (
-        st.sidebar.multiselect("Number of streams", num_streams, default=num_streams)
+    selected_num_stream = (
+        st.sidebar.selectbox("Number of streams", ["All"] + [str(x) for x in num_streams], index=0)
         if num_streams
-        else []
+        else "All"
     )
 
     filtered_df = df.copy()
-    if selected_steel_types:
-        filtered_df = filtered_df[filtered_df["steel_type"].isin(selected_steel_types)]
-    if selected_alloy_types:
-        filtered_df = filtered_df[filtered_df["alloy_type"].isin(selected_alloy_types)]
-    if selected_num_streams:
-        filtered_df = filtered_df[filtered_df["num_stream"].isin(selected_num_streams)]
+    if selected_steel_type != "All":
+        filtered_df = filtered_df[filtered_df["steel_type"] == selected_steel_type]
+    if selected_alloy_type != "All":
+        filtered_df = filtered_df[filtered_df["alloy_type"] == selected_alloy_type]
+    if selected_num_stream != "All":
+        filtered_df = filtered_df[filtered_df["num_stream"].astype(str) == selected_num_stream]
 
     st.subheader("Overview")
 
