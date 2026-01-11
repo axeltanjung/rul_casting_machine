@@ -1,4 +1,4 @@
-# RUL Prediction – Continuous Casting Machines
+# RUL Prediction – Continuous Casting Machine
 
 ## Project Overview
 
